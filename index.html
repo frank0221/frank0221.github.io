@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的随笔 | My Awesome Notes</title>
+    <!-- 引入 Vue 3 -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- 引入 Marked 解析器 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.1/marked.min.js"></script>
+    <!-- 引入 Highlight.js 样式 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <!-- 自定义样式 -->
+    <link rel="stylesheet" href="css/style.css?v=20260323">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <!-- 背景动画 Canvas -->
+        <canvas id="starfield"></canvas>
+
+        <div class="container">
+            <!-- 侧边栏：文章列表 -->
+            <aside class="sidebar">
+                <div class="profile">
+                    <div class="avatar">Frank</div>
+                    <h1>我的随笔</h1>
+                    <p> 记录学习与生活</p>
+                </div>
+                <div class="search">
+                    <input type="text" v-model="searchQuery" placeholder="搜索文章或分类">
+                </div>
+                <div class="quick-entry">
+                    <button class="chip" @click="setSearch('')">全部</button>
+                    <button class="chip" @click="setSearch('置顶')">置顶</button>
+                    <button class="chip" @click="setSearch('项目')">项目</button>
+                    <button class="chip" @click="setSearch('技术')">技术</button>
+                </div>
+                <nav>
+                    <div class="category-group" v-for="(groupPosts, category) in groupedPosts" :key="category">
+                        <div class="category-title" @click="toggleCategory(category)">
+                            <span class="icon">{{ collapsedCategories.has(category) ? '📁' : '📂' }}</span>
+                            {{ category }}
+                            <span class="count">{{ groupPosts.length }}</span>
+                        </div>
+                        <transition name="slide">
+                            <ul v-show="!collapsedCategories.has(category)">
+                                <li v-for="post in groupPosts" :key="post.file" :class="{ active: currentPost === post.file }" @click="loadPost(post)">
+                                    {{ post.title }}
+                                    <span class="date">{{ post.date }}</span>
+                                </li>
+                            </ul>
+                        </transition>
+                    </div>
+                </nav>
+            </aside>
+
+            <!-- 主内容区域：文章展示 -->
+            <main class="content">
+                <div v-if="loading" class="loading">
+                    <div class="spinner"></div>
+                    <p>加载中...</p>
+                </div>
+                <div v-else class="markdown-body" v-html="renderedContent"></div>
+            </main>
+        </div>
+    </div>
+
+    <!-- 引入应用逻辑 -->
+    <script src="js/app.js?v=20260323"></script>
+</body>
+</html>
