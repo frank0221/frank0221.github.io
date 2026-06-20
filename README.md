@@ -2,6 +2,8 @@
 
 这是 Frank Wu 的个人 GitHub Pages 主页，使用纯静态 HTML、CSS 和 JavaScript 构建。
 
+完整维护说明见 [USAGE.md](USAGE.md)。
+
 ## 内容
 
 - Apple 风格的个人主页首屏
