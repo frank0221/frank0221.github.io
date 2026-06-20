@@ -107,6 +107,28 @@ input {
     text-transform: uppercase;
 }
 
+.hero-profile {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 20px;
+}
+
+.hero-profile .eyebrow {
+    margin: 0;
+}
+
+.hero-avatar {
+    width: 88px;
+    height: 88px;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #fff;
+    border: 1px solid rgba(29, 29, 31, 0.12);
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.12);
+}
+
 .hero h1 {
     margin: 0;
     font-size: 82px;
@@ -686,6 +708,16 @@ input {
 
     .hero h1 {
         font-size: 48px;
+    }
+
+    .hero-profile {
+        gap: 12px;
+        margin-bottom: 18px;
+    }
+
+    .hero-avatar {
+        width: 64px;
+        height: 64px;
     }
 
     .hero-subtitle {
