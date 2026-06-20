@@ -591,7 +591,13 @@ input {
 }
 
 .contact-card h2 {
-    max-width: 800px;
+    max-width: none;
+}
+
+@media (min-width: 1080px) {
+    .contact-card h2 {
+        white-space: nowrap;
+    }
 }
 
 .contact-card .eyebrow {
