@@ -1,58 +1,30 @@
-# 🌌 My Cool Blog
+# Frank Wu Personal Site
 
-这是一个酷炫、极简且纯静态的个人博客模板，专门设计用于 GitHub Pages。
-- 基于 **Vue 3**, **Marked**, 和 **Canvas** 打造。
+这是 Frank Wu 的个人 GitHub Pages 主页，使用纯静态 HTML、CSS 和 JavaScript 构建。
 
-## ✨ 特性
+## 内容
 
-- **纯静态**: 不需要 Node.js，不需要构建，即开即用。
-- **酷炫视觉**: 动态星空背景 + 玻璃态设计 + 霓虹光效。
-- **Markdown 支持**: 直接渲染 Markdown 文件，支持代码高亮。
-- **极速**: 基于 CDN 加载，文件体积极小。
+- Apple 风格的个人主页首屏
+- About、Focus、Timeline、Contact 信息区
+- Markdown 随笔列表、搜索、分类筛选和文章阅读器
+- 无构建流程，适合直接部署到 `frank0221.github.io`
 
-## 🛠️ 本地预览
+## 本地预览
 
-由于浏览器的安全策略（CORS），你不能直接双击 `index.html` 打开。你需要一个简单的 HTTP 服务器。
-
-### 如果你安装了 Python (推荐):
-
-在项目根目录下打开终端，运行：
+直接双击 `index.html` 时，浏览器会限制 Markdown 文件读取。请在项目根目录启动本地 HTTP 服务：
 
 ```bash
 python -m http.server 8000
 ```
 
-然后访问: [http://localhost:8000](http://localhost:8000)
+然后访问：
 
-### 如果你使用 VS Code:
-
-安装 "Live Server" 扩展，右键 `index.html` 选择 "Open with Live Server"。
-
-## 📝 如何写文章
-
-1.  在 `posts/` 目录下创建一个新的 `.md` 文件（例如 `my-new-post.md`）。
-2.  打开 `js/app.js`。
-3.  在 `posts` 数组中添加你的文章信息：
-
-```javascript
-const posts = ref([
-    { title: '我的新文章', date: '2023-10-20', file: 'posts/my-new-post.md' },
-    // ... 其他文章
-]);
+```text
+http://localhost:8000
 ```
 
-## 🚀 部署到 GitHub Pages
+## 添加文章
 
-1.  在 GitHub 上创建一个新仓库（例如 `my-blog`）。
-2.  将所有文件上传到该仓库。
-3.  进入仓库 **Settings** -> **Pages**。
-4.  在 **Build and deployment** 下：
-    - Source: **Deploy from a branch**
-    - Branch: **main** (或 master) / **root** (根目录)
-5.  点击 **Save**。
-6.  等待几分钟，你的博客就会上线！
-
-## 🎨 自定义
-
-- 修改 `css/style.css` 中的 `:root` 变量来改变颜色。
-- 修改 `js/app.js` 中的 `initStarfield` 函数来调整背景动画。
+1. 在 `posts/` 下新增 `.md` 文件。
+2. 在 `js/app.js` 的 `posts` 数组中添加文章标题、日期、路径、分类和摘要。
+3. 提交并推送到 GitHub Pages 仓库。

@@ -1,190 +1,306 @@
-const { createApp, ref, computed, onMounted } = Vue;
-
-const app = createApp({
-    setup() {
-        // 文章列表配置（新增文章需在此处添加，支持 category 分类）
-        const posts = ref([
-            { title: '链接脚本学习', date: '2026-03-23', file: 'posts/链接脚本学习.md', category: '技术' },
-            { title: '画图笔记', date: '2026-03-05', file: 'posts/画图笔记.md', category: '笔记' },
-            { title: '欢迎来到我的主页', date: '2023-10-01', file: 'posts/welcome.md', category: '置顶' },
-            { title: '关于这个酷炫的博客', date: '2023-10-02', file: 'posts/about.md', category: '项目' },
-            //{ title: 'Markdown 测试', date: '2023-10-03', file: 'posts/test.md', category: '技术' }
-        ]);
-
-        const searchQuery = ref('');
-        const currentPost = ref('');
-        const renderedContent = ref('');
-        const loading = ref(false);
-
-        // 分类折叠状态（默认全展开）
-        const collapsedCategories = ref(new Set());
-
-        // 计算属性：按分类分组文章
-        const filteredPosts = computed(() => {
-            const q = searchQuery.value.trim().toLowerCase();
-            if (!q) return posts.value;
-            return posts.value.filter(p => {
-                const title = (p.title || '').toLowerCase();
-                const cat = (p.category || '').toLowerCase();
-                const date = (p.date || '').toLowerCase();
-                return title.includes(q) || cat.includes(q) || date.includes(q);
-            });
-        });
-
-        const groupedPosts = computed(() => {
-            const groups = {};
-            filteredPosts.value.forEach(post => {
-                const cat = post.category || '未分类';
-                if (!groups[cat]) {
-                    groups[cat] = [];
-                }
-                groups[cat].push(post);
-            });
-            return groups;
-        });
-
-        const setSearch = (term) => {
-            searchQuery.value = term;
-        };
-
-        // 切换分类折叠
-        const toggleCategory = (category) => {
-            if (collapsedCategories.value.has(category)) {
-                collapsedCategories.value.delete(category);
-            } else {
-                collapsedCategories.value.add(category);
-            }
-        };
-
-        // 加载文章
-        const loadPost = async (post) => {
-            if (currentPost.value === post.file) return;
-            
-            loading.value = true;
-            currentPost.value = post.file;
-            
-            try {
-                // 添加时间戳参数以防止浏览器缓存
-                const response = await fetch(`${post.file}?t=${new Date().getTime()}`);
-                if (!response.ok) throw new Error('无法加载文章');
-                const text = await response.text();
-                
-                // 使用 marked 解析 markdown
-                renderedContent.value = marked.parse(text);
-                
-                // 代码高亮
-                requestAnimationFrame(() => {
-                    document.querySelectorAll('pre code').forEach((block) => {
-                        hljs.highlightElement(block);
-                    });
-                });
-            } catch (error) {
-                console.error(error);
-                renderedContent.value = '<h1>加载失败</h1><p>请检查网络或文件路径。</p>';
-            } finally {
-                loading.value = false;
-            }
-        };
-
-        onMounted(() => {
-            // 默认加载第一篇
-            if (posts.value.length > 0) {
-                loadPost(posts.value[0]);
-            }
-            initStarfield();
-        });
-
-        return {
-            posts,
-            searchQuery,
-            filteredPosts,
-            groupedPosts,
-            collapsedCategories,
-            toggleCategory,
-            setSearch,
-            currentPost,
-            renderedContent,
-            loading,
-            loadPost
-        };
+const posts = [
+    {
+        title: "欢迎来到我的主页",
+        date: "2023-10-01",
+        file: "posts/welcome.md",
+        category: "置顶",
+        summary: "个人简介、技术栈与联系方式。"
+    },
+    {
+        title: "链接脚本学习",
+        date: "2026-03-23",
+        file: "posts/链接脚本学习.md",
+        category: "技术",
+        summary: "链接脚本的 MEMORY、SECTIONS 与位置计数器。"
+    },
+    {
+        title: "画图笔记",
+        date: "2026-03-05",
+        file: "posts/画图笔记.md",
+        category: "笔记",
+        summary: "Matplotlib 常用图表与科研绘图技巧。"
+    },
+    {
+        title: "关于这个站点",
+        date: "2026-06-20",
+        file: "posts/about.md",
+        category: "项目",
+        summary: "这个 GitHub Pages 站点的设计与实现说明。"
     }
-});
+];
 
-app.mount('#app');
+const state = {
+    query: "",
+    category: "全部",
+    currentFile: ""
+};
 
-// --- 星空背景动画逻辑 ---
-function initStarfield() {
-    const canvas = document.getElementById('starfield');
-    const ctx = canvas.getContext('2d');
-    
-    let width, height;
-    let stars = [];
-    const starCount = 200;
+const elements = {
+    searchInput: document.querySelector("#searchInput"),
+    categoryFilters: document.querySelector("#categoryFilters"),
+    postList: document.querySelector("#postList"),
+    readerMeta: document.querySelector("#readerMeta"),
+    articleContent: document.querySelector("#articleContent")
+};
 
-    function resize() {
-        width = window.innerWidth;
-        height = window.innerHeight;
-        canvas.width = width;
-        canvas.height = height;
-    }
-
-    class Star {
-        constructor() {
-            this.reset();
-        }
-
-        reset() {
-            this.x = Math.random() * width;
-            this.y = Math.random() * height;
-            this.z = Math.random() * 2 + 0.5; // 深度/速度
-            this.size = Math.random() * 1.5;
-            this.opacity = Math.random();
-            this.fadeSpeed = Math.random() * 0.02 + 0.005;
-        }
-
-        update() {
-            this.y -= this.z * 0.5; // 向上移动
-            
-            // 闪烁效果
-            this.opacity += this.fadeSpeed;
-            if (this.opacity > 1 || this.opacity < 0) {
-                this.fadeSpeed = -this.fadeSpeed;
-            }
-
-            // 重置位置
-            if (this.y < 0) {
-                this.reset();
-                this.y = height;
-            }
-        }
-
-        draw() {
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(255, 255, 255, ${Math.abs(this.opacity)})`;
-            ctx.fill();
-        }
-    }
-
-    function init() {
-        resize();
-        for (let i = 0; i < starCount; i++) {
-            stars.push(new Star());
-        }
-        animate();
-    }
-
-    function animate() {
-        ctx.clearRect(0, 0, width, height);
-        
-        stars.forEach(star => {
-            star.update();
-            star.draw();
-        });
-
-        requestAnimationFrame(animate);
-    }
-
-    window.addEventListener('resize', resize);
-    init();
+function escapeHtml(value) {
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 }
+
+function escapeAttr(value) {
+    return escapeHtml(value).replace(/`/g, "&#096;");
+}
+
+function renderInline(text) {
+    let html = escapeHtml(text);
+    html = html.replace(/`([^`]+)`/g, "<code>$1</code>");
+    html = html.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+    html = html.replace(/\*([^*]+)\*/g, "<em>$1</em>");
+    html = html.replace(
+        /\[([^\]]+)\]\(([^)]+)\)/g,
+        '<a href="$2" target="_blank" rel="noreferrer">$1</a>'
+    );
+    return html;
+}
+
+function isTableDivider(line) {
+    return /^\s*\|?[\s:-]+\|[\s|:-]*$/.test(line) && line.includes("-");
+}
+
+function splitTableRow(line) {
+    return line
+        .trim()
+        .replace(/^\|/, "")
+        .replace(/\|$/, "")
+        .split("|")
+        .map((cell) => cell.trim());
+}
+
+function parseMarkdown(source) {
+    const lines = source.replace(/\r\n/g, "\n").split("\n");
+    const html = [];
+
+    for (let i = 0; i < lines.length; i += 1) {
+        const line = lines[i];
+        const trimmed = line.trim();
+
+        if (!trimmed) {
+            continue;
+        }
+
+        if (trimmed.startsWith("```")) {
+            const lang = trimmed.slice(3).trim();
+            const codeLines = [];
+            i += 1;
+            while (i < lines.length && !lines[i].trim().startsWith("```")) {
+                codeLines.push(lines[i]);
+                i += 1;
+            }
+            html.push(
+                `<pre><code class="language-${escapeAttr(lang)}">${escapeHtml(codeLines.join("\n"))}</code></pre>`
+            );
+            continue;
+        }
+
+        if (/^---+$/.test(trimmed)) {
+            html.push("<hr>");
+            continue;
+        }
+
+        const heading = trimmed.match(/^(#{1,3})\s+(.+)$/);
+        if (heading) {
+            const level = heading[1].length;
+            html.push(`<h${level}>${renderInline(heading[2])}</h${level}>`);
+            continue;
+        }
+
+        if (trimmed.startsWith(">")) {
+            const quoteLines = [];
+            while (i < lines.length && lines[i].trim().startsWith(">")) {
+                quoteLines.push(lines[i].trim().replace(/^>\s?/, ""));
+                i += 1;
+            }
+            i -= 1;
+            html.push(`<blockquote>${quoteLines.map(renderInline).join("<br>")}</blockquote>`);
+            continue;
+        }
+
+        if (/^\s*[-*]\s+/.test(line)) {
+            const items = [];
+            while (i < lines.length && /^\s*[-*]\s+/.test(lines[i])) {
+                items.push(lines[i].replace(/^\s*[-*]\s+/, ""));
+                i += 1;
+            }
+            i -= 1;
+            html.push(`<ul>${items.map((item) => `<li>${renderInline(item)}</li>`).join("")}</ul>`);
+            continue;
+        }
+
+        if (/^\s*\d+\.\s+/.test(line)) {
+            const items = [];
+            while (i < lines.length && /^\s*\d+\.\s+/.test(lines[i])) {
+                items.push(lines[i].replace(/^\s*\d+\.\s+/, ""));
+                i += 1;
+            }
+            i -= 1;
+            html.push(`<ol>${items.map((item) => `<li>${renderInline(item)}</li>`).join("")}</ol>`);
+            continue;
+        }
+
+        if (line.includes("|") && lines[i + 1] && isTableDivider(lines[i + 1])) {
+            const headers = splitTableRow(line);
+            i += 2;
+            const rows = [];
+            while (i < lines.length && lines[i].includes("|") && lines[i].trim()) {
+                rows.push(splitTableRow(lines[i]));
+                i += 1;
+            }
+            i -= 1;
+            html.push(`
+                <table>
+                    <thead><tr>${headers.map((cell) => `<th>${renderInline(cell)}</th>`).join("")}</tr></thead>
+                    <tbody>${rows.map((row) => `<tr>${row.map((cell) => `<td>${renderInline(cell)}</td>`).join("")}</tr>`).join("")}</tbody>
+                </table>
+            `);
+            continue;
+        }
+
+        const paragraph = [trimmed];
+        while (
+            i + 1 < lines.length &&
+            lines[i + 1].trim() &&
+            !/^(#{1,3})\s+/.test(lines[i + 1].trim()) &&
+            !lines[i + 1].trim().startsWith("```") &&
+            !lines[i + 1].trim().startsWith(">") &&
+            !/^\s*[-*]\s+/.test(lines[i + 1]) &&
+            !/^\s*\d+\.\s+/.test(lines[i + 1]) &&
+            !(lines[i + 1].includes("|") && lines[i + 2] && isTableDivider(lines[i + 2]))
+        ) {
+            i += 1;
+            paragraph.push(lines[i].trim());
+        }
+        html.push(`<p>${renderInline(paragraph.join(" "))}</p>`);
+    }
+
+    return html.join("");
+}
+
+function getCategories() {
+    return ["全部", ...Array.from(new Set(posts.map((post) => post.category)))];
+}
+
+function getFilteredPosts() {
+    const query = state.query.trim().toLowerCase();
+    return posts.filter((post) => {
+        const matchesCategory = state.category === "全部" || post.category === state.category;
+        const haystack = `${post.title} ${post.category} ${post.date} ${post.summary}`.toLowerCase();
+        return matchesCategory && (!query || haystack.includes(query));
+    });
+}
+
+function renderCategoryFilters() {
+    elements.categoryFilters.innerHTML = getCategories()
+        .map((category) => {
+            const active = category === state.category ? " active" : "";
+            return `<button class="filter-button${active}" type="button" data-category="${escapeAttr(category)}">${escapeHtml(category)}</button>`;
+        })
+        .join("");
+}
+
+function renderPostList() {
+    const filteredPosts = getFilteredPosts();
+
+    if (!filteredPosts.length) {
+        elements.postList.innerHTML = '<p class="empty-state">没有匹配的文章。</p>';
+        return;
+    }
+
+    elements.postList.innerHTML = filteredPosts
+        .map((post) => {
+            const active = post.file === state.currentFile ? " active" : "";
+            return `
+                <button class="post-button${active}" type="button" data-file="${escapeAttr(post.file)}">
+                    <span class="post-title">${escapeHtml(post.title)}</span>
+                    <span class="post-meta">
+                        <span>${escapeHtml(post.category)}</span>
+                        <span>${escapeHtml(post.date)}</span>
+                    </span>
+                </button>
+            `;
+        })
+        .join("");
+}
+
+function renderReaderMeta(post) {
+    elements.readerMeta.innerHTML = `
+        <span>${escapeHtml(post.category)}</span>
+        <span>${escapeHtml(post.date)}</span>
+        <span>${escapeHtml(post.summary)}</span>
+    `;
+}
+
+async function loadPost(post) {
+    if (!post) {
+        return;
+    }
+
+    state.currentFile = post.file;
+    renderPostList();
+    renderReaderMeta(post);
+    elements.articleContent.innerHTML = '<p class="loading-state">正在加载文章...</p>';
+
+    try {
+        const response = await fetch(`${post.file}?v=20260620`);
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+        }
+        const text = await response.text();
+        elements.articleContent.innerHTML = parseMarkdown(text);
+    } catch (error) {
+        elements.articleContent.innerHTML = `
+            <h1>文章加载失败</h1>
+            <p>请确认当前页面通过本地 HTTP 服务或 GitHub Pages 访问，而不是直接双击打开 HTML 文件。</p>
+        `;
+        console.error(error);
+    }
+}
+
+function bindEvents() {
+    elements.searchInput.addEventListener("input", (event) => {
+        state.query = event.target.value;
+        renderPostList();
+    });
+
+    elements.categoryFilters.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-category]");
+        if (!button) {
+            return;
+        }
+        state.category = button.dataset.category;
+        renderCategoryFilters();
+        renderPostList();
+    });
+
+    elements.postList.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-file]");
+        if (!button) {
+            return;
+        }
+        const post = posts.find((item) => item.file === button.dataset.file);
+        loadPost(post);
+    });
+}
+
+function init() {
+    bindEvents();
+    renderCategoryFilters();
+    renderPostList();
+    loadPost(posts[0]);
+}
+
+init();
