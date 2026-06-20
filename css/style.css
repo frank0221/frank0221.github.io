@@ -214,22 +214,21 @@ input {
     font-weight: 700;
 }
 
-.silicon-chip strong {
+.silicon-chip .chip-stack {
     flex: 1;
     width: 100%;
     margin-top: 22px;
     font-size: 44px;
     line-height: 0.95;
-}
-
-.chip-stack {
     display: grid;
-    grid-template-rows: repeat(3, 1fr);
-    align-items: center;
+    grid-template-rows: repeat(3, minmax(0, 1fr));
+    align-items: stretch;
 }
 
 .chip-stack span {
-    display: block;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
 }
 
 .signal-grid {
