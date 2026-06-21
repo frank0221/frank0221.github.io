@@ -82,6 +82,11 @@ input {
     color: var(--blue);
 }
 
+.nav-link-active {
+    color: var(--blue);
+    font-weight: 700;
+}
+
 .nav-cta {
     color: var(--blue);
     font-size: 13px;
@@ -325,6 +330,16 @@ input {
     margin: 0;
     color: var(--muted);
     font-size: 17px;
+}
+
+.notes-page {
+    min-height: calc(100vh - 52px);
+}
+
+.notes-page .section-heading h1 {
+    margin: 0;
+    font-size: 48px;
+    line-height: 1.08;
 }
 
 .feature-grid {

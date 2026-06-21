@@ -221,13 +221,23 @@ function getCategories() {
     return ["全部", ...Array.from(new Set(posts.map((post) => post.category).filter(Boolean)))];
 }
 
+function comparePostsByDateDesc(a, b) {
+    const dateDiff = new Date(b.date).getTime() - new Date(a.date).getTime();
+    if (dateDiff !== 0) {
+        return dateDiff;
+    }
+    return a.title.localeCompare(b.title, "zh-CN");
+}
+
 function getFilteredPosts() {
     const query = state.query.trim().toLowerCase();
-    return posts.filter((post) => {
-        const matchesCategory = state.category === "全部" || post.category === state.category;
-        const haystack = `${post.title} ${post.category} ${post.date} ${post.summary}`.toLowerCase();
-        return matchesCategory && (!query || haystack.includes(query));
-    });
+    return posts
+        .filter((post) => {
+            const matchesCategory = state.category === "全部" || post.category === state.category;
+            const haystack = `${post.title} ${post.category} ${post.date} ${post.summary}`.toLowerCase();
+            return matchesCategory && (!query || haystack.includes(query));
+        })
+        .sort(comparePostsByDateDesc);
 }
 
 function renderCategoryFilters() {
@@ -339,7 +349,7 @@ function init() {
     bindEvents();
     renderCategoryFilters();
     renderPostList();
-    resetReader();
+    loadPost(posts.filter((post) => post.category === "置顶").sort(comparePostsByDateDesc)[0] || getFilteredPosts()[0]);
 }
 
 init();

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Frank Wu 的个人主页，记录 CPU Design、Computer Architecture、System 与个人技术随笔。">
     <title>Frank Wu | Personal Site</title>
-    <link rel="stylesheet" href="css/style.css?v=20260621-3">
+    <link rel="stylesheet" href="css/style.css?v=20260621-4">
 </head>
 <body>
     <div id="app">
@@ -15,7 +15,7 @@
                 <div class="nav-links">
                     <a href="#about">About</a>
                     <a href="#focus">Focus</a>
-                    <a href="#notes">Notes</a>
+                    <a href="notes.html">Notes</a>
                     <a href="#timeline">Timeline</a>
                 </div>
                 <a class="nav-cta" href="https://github.com/frank0221" target="_blank" rel="noreferrer">GitHub</a>
@@ -34,7 +34,7 @@
                         电子信息科学与技术学生，关注 RISC-V、计算机体系结构、RTL 硬件仿真加速与系统编程。
                     </p>
                     <div class="hero-actions" aria-label="快捷操作">
-                        <a class="button button-primary" href="#notes">阅读随笔</a>
+                        <a class="button button-primary" href="notes.html">阅读随笔</a>
                         <div class="hero-contact-icons" aria-label="联系方式">
                             <a class="contact-icon-link" href="mailto:frankwu387@gmail.com" aria-label="发送邮件给 Frank Wu">
                                 <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -117,35 +117,6 @@
                 </div>
             </section>
 
-            <section class="section section-white" id="notes">
-                <div class="section-inner">
-                    <div class="section-heading notes-heading">
-                        <div>
-                            <p class="eyebrow">Notes</p>
-                            <h2>随笔与技术笔记。</h2>
-                        </div>
-                    </div>
-
-                    <div class="notes-shell">
-                        <aside class="notes-panel" aria-label="文章列表">
-                            <label class="search-box">
-                                <span>Search</span>
-                                <input id="searchInput" type="search" placeholder="搜索标题、分类或日期">
-                            </label>
-                            <div class="filter-row" id="categoryFilters" aria-label="分类筛选"></div>
-                            <div class="post-list" id="postList"></div>
-                        </aside>
-
-                        <article class="reader" aria-live="polite">
-                            <div class="reader-meta" id="readerMeta"></div>
-                            <div class="markdown-body" id="articleContent">
-                                <p class="empty-state">选择一篇文章开始阅读。</p>
-                            </div>
-                        </article>
-                    </div>
-                </div>
-            </section>
-
             <section class="section" id="timeline">
                 <div class="section-inner">
                     <div class="section-heading">
@@ -179,7 +150,5 @@
             <span>Built for GitHub Pages.</span>
         </footer>
     </div>
-
-    <script src="js/app.js?v=20260621-2"></script>
 </body>
 </html>
