@@ -10,8 +10,15 @@ const posts = [
         title: "链接脚本学习",
         date: "2026-03-23",
         file: "posts/链接脚本学习.md",
-        category: "技术",
+        category: "笔记",
         summary: "链接脚本的 MEMORY、SECTIONS 与位置计数器。"
+    },
+    {
+        title: "系统结构笔记（一）：系统结构基础概念",
+        date: "2026-06-21",
+        file: "posts/系统结构笔记（一）：系统结构基本概念.md",
+        category: "笔记",
+        summary: "计算机系统结构基础知识"
     },
     {
         title: "画图笔记",
@@ -191,7 +198,7 @@ function parseMarkdown(source) {
 }
 
 function getCategories() {
-    return ["全部", ...Array.from(new Set(posts.map((post) => post.category)))];
+    return ["全部", ...Array.from(new Set(posts.map((post) => post.category).filter(Boolean)))];
 }
 
 function getFilteredPosts() {
