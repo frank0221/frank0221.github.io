@@ -613,42 +613,50 @@ input {
 }
 
 .contact-section {
-    padding-top: 24px;
+    padding: 40px 24px 34px;
 }
 
-.contact-card {
-    padding: 56px 64px;
-    border-radius: 28px;
-    color: #f5f5f7;
-    background: #1d1d1f;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: end;
-    gap: 32px 56px;
+.contact-icons {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
 }
 
-.contact-card h2 {
-    grid-column: 1;
-    max-width: 860px;
-    font-size: clamp(34px, 3.4vw, 50px);
-    line-height: 1.14;
+.contact-icon-link {
+    width: 54px;
+    height: 54px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: var(--ink);
+    background: #fff;
+    border: 1px solid var(--soft-line);
+    box-shadow: 0 12px 34px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.contact-card .eyebrow {
-    grid-column: 1;
-    color: rgba(245, 245, 247, 0.58);
+.contact-icon-link:hover {
+    color: var(--blue);
+    border-color: rgba(0, 113, 227, 0.28);
+    box-shadow: 0 16px 42px rgba(0, 113, 227, 0.12);
+    transform: translateY(-2px);
 }
 
-.contact-card .contact-actions {
-    grid-column: 2;
-    grid-row: 1 / span 2;
-    align-self: end;
-    margin-top: 0;
-    justify-content: flex-end;
+.contact-icon-link svg {
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 
-.contact-card .button {
-    min-width: 260px;
+.contact-icon-link svg path:first-child:last-child,
+.contact-icon-link svg path:nth-child(1):nth-last-child(1) {
+    fill: currentColor;
+    stroke: none;
 }
 
 .site-footer {
@@ -682,15 +690,8 @@ input {
     }
 
     .two-column,
-    .contact-card,
     .notes-shell {
         grid-template-columns: 1fr;
-    }
-
-    .contact-card .contact-actions {
-        grid-column: 1;
-        grid-row: auto;
-        justify-content: flex-start;
     }
 
     .notes-panel {
@@ -749,15 +750,9 @@ input {
         flex-direction: column;
     }
 
-    .reader,
-    .contact-card {
+    .reader {
         padding: 24px;
         border-radius: 18px;
-    }
-
-    .contact-card .button {
-        width: 100%;
-        min-width: 0;
     }
 
     .markdown-body h1 {
