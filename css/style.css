@@ -152,6 +152,12 @@ input {
     margin-top: 34px;
 }
 
+.hero-contact-icons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
 .button {
     display: inline-flex;
     align-items: center;
@@ -500,7 +506,10 @@ input {
 
 .markdown-body h1,
 .markdown-body h2,
-.markdown-body h3 {
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
     color: var(--ink);
     line-height: 1.18;
 }
@@ -520,12 +529,24 @@ input {
     font-size: 21px;
 }
 
+.markdown-body h4 {
+    margin: 24px 0 10px;
+    font-size: 18px;
+}
+
+.markdown-body h5,
+.markdown-body h6 {
+    margin: 20px 0 10px;
+    font-size: 16px;
+}
+
 .markdown-body p,
 .markdown-body ul,
 .markdown-body ol,
 .markdown-body table,
 .markdown-body blockquote,
-.markdown-body pre {
+.markdown-body pre,
+.markdown-body .math-block {
     margin: 0 0 18px;
 }
 
@@ -566,6 +587,21 @@ input {
     border-radius: 12px;
     background: #f5f5f7;
     color: var(--muted);
+}
+
+.markdown-body .math-block {
+    padding: 16px 18px;
+    overflow-x: auto;
+    border-radius: 14px;
+    background: #f5f5f7;
+    color: var(--ink);
+    font-family: "SF Mono", Consolas, "Liberation Mono", monospace;
+    white-space: pre-wrap;
+}
+
+.markdown-body .footnote {
+    color: var(--muted);
+    font-size: 0.92em;
 }
 
 .markdown-body table {
@@ -612,19 +648,9 @@ input {
     font-size: 18px;
 }
 
-.contact-section {
-    padding: 40px 24px 34px;
-}
-
-.contact-icons {
-    display: flex;
-    justify-content: center;
-    gap: 16px;
-}
-
 .contact-icon-link {
-    width: 54px;
-    height: 54px;
+    width: 44px;
+    height: 44px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -632,7 +658,7 @@ input {
     color: var(--ink);
     background: #fff;
     border: 1px solid var(--soft-line);
-    box-shadow: 0 12px 34px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
     transition: transform 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -644,8 +670,8 @@ input {
 }
 
 .contact-icon-link svg {
-    width: 24px;
-    height: 24px;
+    width: 21px;
+    height: 21px;
     fill: none;
     stroke: currentColor;
     stroke-width: 1.8;
@@ -653,8 +679,7 @@ input {
     stroke-linejoin: round;
 }
 
-.contact-icon-link svg path:first-child:last-child,
-.contact-icon-link svg path:nth-child(1):nth-last-child(1) {
+.contact-icon-link .github-mark {
     fill: currentColor;
     stroke: none;
 }

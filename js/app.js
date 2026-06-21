@@ -68,6 +68,7 @@ function renderInline(text) {
     html = html.replace(/`([^`]+)`/g, "<code>$1</code>");
     html = html.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
     html = html.replace(/\*([^*]+)\*/g, "<em>$1</em>");
+    html = html.replace(/\[\^([^\]]+)\]/g, '<sup>[$1]</sup>');
     html = html.replace(
         /\[([^\]]+)\]\(([^)]+)\)/g,
         '<a href="$2" target="_blank" rel="noreferrer">$1</a>'
@@ -119,7 +120,24 @@ function parseMarkdown(source) {
             continue;
         }
 
-        const heading = trimmed.match(/^(#{1,3})\s+(.+)$/);
+        if (trimmed === "$$") {
+            const mathLines = [];
+            i += 1;
+            while (i < lines.length && lines[i].trim() !== "$$") {
+                mathLines.push(lines[i]);
+                i += 1;
+            }
+            html.push(`<div class="math-block">${escapeHtml(mathLines.join("\n"))}</div>`);
+            continue;
+        }
+
+        const footnote = trimmed.match(/^\[\^([^\]]+)\]:\s*(.+)$/);
+        if (footnote) {
+            html.push(`<p class="footnote"><sup>[${escapeHtml(footnote[1])}]</sup> ${renderInline(footnote[2])}</p>`);
+            continue;
+        }
+
+        const heading = trimmed.match(/^(#{1,6})\s+(.+)$/);
         if (heading) {
             const level = heading[1].length;
             html.push(`<h${level}>${renderInline(heading[2])}</h${level}>`);
@@ -181,9 +199,11 @@ function parseMarkdown(source) {
         while (
             i + 1 < lines.length &&
             lines[i + 1].trim() &&
-            !/^(#{1,3})\s+/.test(lines[i + 1].trim()) &&
+            !/^(#{1,6})\s+/.test(lines[i + 1].trim()) &&
             !lines[i + 1].trim().startsWith("```") &&
+            lines[i + 1].trim() !== "$$" &&
             !lines[i + 1].trim().startsWith(">") &&
+            !/^\[\^([^\]]+)\]:\s*(.+)$/.test(lines[i + 1].trim()) &&
             !/^\s*[-*]\s+/.test(lines[i + 1]) &&
             !/^\s*\d+\.\s+/.test(lines[i + 1]) &&
             !(lines[i + 1].includes("|") && lines[i + 2] && isTableDivider(lines[i + 2]))
@@ -243,6 +263,12 @@ function renderPostList() {
         .join("");
 }
 
+function resetReader() {
+    state.currentFile = "";
+    elements.readerMeta.innerHTML = "";
+    elements.articleContent.innerHTML = '<p class="empty-state">选择一篇文章开始阅读。</p>';
+}
+
 function renderReaderMeta(post) {
     elements.readerMeta.innerHTML = `
         <span>${escapeHtml(post.category)}</span>
@@ -280,6 +306,9 @@ async function loadPost(post) {
 function bindEvents() {
     elements.searchInput.addEventListener("input", (event) => {
         state.query = event.target.value;
+        if (!getFilteredPosts().some((post) => post.file === state.currentFile)) {
+            resetReader();
+        }
         renderPostList();
     });
 
@@ -289,6 +318,9 @@ function bindEvents() {
             return;
         }
         state.category = button.dataset.category;
+        if (!getFilteredPosts().some((post) => post.file === state.currentFile)) {
+            resetReader();
+        }
         renderCategoryFilters();
         renderPostList();
     });
@@ -307,7 +339,7 @@ function init() {
     bindEvents();
     renderCategoryFilters();
     renderPostList();
-    loadPost(posts[0]);
+    resetReader();
 }
 
 init();
