@@ -21,6 +21,13 @@ const posts = [
         summary: "计算机系统结构基础知识"
     },
     {
+        title: "pynq入门笔记（一）",
+        date: "2026-06-24",
+        file: "posts/pynq入门（一）：Overlay和MMIO.md",
+        category: "pynq系列",
+        summary: "pynq入门"
+    },
+    {
         title: "画图笔记",
         date: "2026-03-05",
         file: "posts/画图笔记.md",
