@@ -305,7 +305,7 @@ async function loadPost(post) {
     elements.articleContent.innerHTML = '<p class="loading-state">正在加载文章...</p>';
 
     try {
-        const response = await fetch(`${post.file}?v=20260620`);
+        const response = await fetch(post.file, { cache: "no-store" });
         if (!response.ok) {
             throw new Error(`HTTP ${response.status}`);
         }

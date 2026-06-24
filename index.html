@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Frank Wu 的个人主页，记录 CPU Design、Computer Architecture、System 与个人技术随笔。">
+    <meta name="description" content="吴家星（Frank Wu）的个人主页，记录 RISC-V CPU、RTL 仿真、FPGA 和系统编程相关的学习与实践。">
     <title>Frank Wu | Personal Site</title>
     <link rel="stylesheet" href="css/style.css?v=20260621-4">
 </head>
@@ -27,11 +27,11 @@
                 <div class="hero-copy">
                     <div class="hero-profile">
                         <img class="hero-avatar" src="https://github.com/frank0221.png" alt="Frank Wu 的 GitHub 头像" width="88" height="88">
-                        <p class="eyebrow">JLU EE · CPU Design · Systems</p>
+                        <p class="eyebrow">JLU Undergraduate · Computer Architecture</p>
                     </div>
                     <h1>Frank Wu</h1>
                     <p class="hero-subtitle">
-                        电子信息科学与技术学生，关注 RISC-V、计算机体系结构、RTL 硬件仿真加速与系统编程。
+                        吉林大学电子信息科学与技术专业本科生，正在学习 RISC-V CPU 设计，并参与 RTL 硬件仿真加速相关工作。
                     </p>
                     <div class="hero-actions" aria-label="快捷操作">
                         <a class="button button-primary" href="notes.html">阅读随笔</a>
@@ -51,24 +51,24 @@
                     </div>
                 </div>
 
-                <div class="hero-visual" aria-label="Frank 的技术方向概览">
+                <div class="hero-visual" aria-label="Frank 最近正在学习的内容">
                     <div class="chip-topline">
-                        <span>Current Focus</span>
+                        <span>Now Learning</span>
                         <strong>2026</strong>
                     </div>
                     <div class="silicon-chip">
-                        <span class="chip-label">Silicon Notes</span>
+                        <span class="chip-label">Current Work</span>
                         <strong class="chip-stack">
-                            <span>CPU</span>
+                            <span>RISC-V</span>
                             <span>RTL</span>
-                            <span>System</span>
+                            <span>PYNQ</span>
                         </strong>
                     </div>
                     <div class="signal-grid">
-                        <span>RISC-V</span>
                         <span>Verilog</span>
-                        <span>C / C++</span>
                         <span>Chisel</span>
+                        <span>C / C++</span>
+                        <span>Linux</span>
                     </div>
                 </div>
             </section>
@@ -77,15 +77,20 @@
                 <div class="section-inner two-column">
                     <div>
                         <p class="eyebrow">About Me</p>
-                        <h2>把底层系统拆开，<br>再重新理解它。</h2>
+                        <h2>你好，我是吴家星。</h2>
                     </div>
                     <div class="lead-copy">
                         <p>
-                            我来自吉林大学电子信息科学与技术专业，喜欢从硬件、体系结构和系统软件交界处理解计算机。
-                            目前在中国科学院计算技术研究所实习，参与 RTL 硬件仿真加速相关工作。
+                            我就读于吉林大学电子信息科学与技术专业。之前在中国科学院计算技术研究所实习，
+                            参与 RTL 硬件仿真加速相关工作。
+                            目前保研中。。。。（焦绿中）
                         </p>
                         <p>
-                            这个站点用来沉淀学习笔记、项目复盘和技术思考，也会记录一些阶段性的目标与成果。
+                            我对处理器设计和计算机系统感兴趣，目前正在参加一生一芯，学习 RISC-V CPU 的流水线、
+                            cache和 SoC 设计。最近也在使用 Zynq UltraScale+ 开发板学习 PYNQ。
+                        </p>
+                        <p>
+                            这个网站主要记录学习过程中遇到的问题、查到的资料和最后采用的解决方法。
                         </p>
                     </div>
                 </div>
@@ -95,23 +100,23 @@
                 <div class="section-inner">
                     <div class="section-heading">
                         <p class="eyebrow">Focus</p>
-                        <h2>三个长期方向。</h2>
+                        <h2>最近在做什么。</h2>
                     </div>
                     <div class="feature-grid">
                         <article class="feature-tile">
-                            <span class="tile-kicker">Architecture</span>
-                            <h3>RISC-V 与 CPU 设计</h3>
-                            <p>一生一芯学习中，关注指令集、流水线、缓存与 SoC 设计中的工程取舍。</p>
+                            <span class="tile-kicker">PROCESSOR</span>
+                            <h3>RISC-V CPU</h3>
+                            <p>参加一生一芯，学习处理器流水线、缓存、总线和 SoC 设计，并通过代码和仿真理解各个模块怎样协同工作。</p>
                         </article>
                         <article class="feature-tile">
-                            <span class="tile-kicker">Hardware</span>
-                            <h3>数字集成电路</h3>
-                            <p>从 Verilog 到 Chisel，再到综合、仿真与 FPGA 验证，持续补齐硬件设计链路。</p>
+                            <span class="tile-kicker">SIMULATION</span>
+                            <h3>RTL 仿真</h3>
+                            <p>在计算所实习期间参与 RTL 硬件仿真加速相关工作，主要了解大型硬件设计的编译、划分和执行过程。</p>
                         </article>
                         <article class="feature-tile">
-                            <span class="tile-kicker">System</span>
-                            <h3>系统编程</h3>
-                            <p>使用 C / C++ 和 Linux 工具理解链接、内存、编译与运行时行为。</p>
+                            <span class="tile-kicker">FPGA &amp; SYSTEM</span>
+                            <h3>PYNQ 与系统编程</h3>
+                            <p>使用 Zynq UltraScale+ 开发板学习 pynq与软硬件协同，ai加速器入门中。</p>
                         </article>
                     </div>
                 </div>
@@ -121,24 +126,32 @@
                 <div class="section-inner">
                     <div class="section-heading">
                         <p class="eyebrow">Timeline</p>
-                        <h2>最近的里程碑。</h2>
+                        <h2>经历与近况。</h2>
                     </div>
                     <div class="timeline">
                         <div class="timeline-item">
-                            <span>2026</span>
-                            <p>继续推进体系结构、RTL 仿真加速与个人知识库建设。</p>
+                            <span>2026.1</span>
+                            <p>在中国科学院计算技术研究所实习，参与 RTL 硬件仿真加速相关工作。</p>
                         </div>
                         <div class="timeline-item">
-                            <span>2025</span>
-                            <p>中国科学院计算技术研究所实习，参与 RTL 硬件仿真加速工作。</p>
+                            <span>2025.11</span>
+                            <p>全国嵌入式芯片与系统设计大赛国三。</p>
                         </div>
                         <div class="timeline-item">
-                            <span>2025</span>
-                            <p>一生一芯 C 线准备与答辩，持续学习 RISC-V CPU 设计。</p>
+                            <span>2025.8</span>
+                            <p>参加一生一芯，继续学习 RISC-V CPU 设计。</p>
                         </div>
                         <div class="timeline-item">
-                            <span>2025</span>
-                            <p>集创赛省级二等奖、蓝桥杯单片机国三、全国嵌入式芯片与系统设计大赛国三、美赛 M 奖。</p>
+                            <span>2025.7</span>
+                            <p>集创赛省级二等奖。</p>
+                        </div>
+                        <div class="timeline-item">
+                            <span>2025.6</span>
+                            <p>蓝桥杯单片机国三、美赛 M 奖。</p>
+                        </div>
+                        <div class="timeline-item">
+                            <span>2023</span>
+                            <p>进入吉林大学电子信息科学与技术专业学习。</p>
                         </div>
                     </div>
                 </div>

@@ -185,10 +185,33 @@ python -m http.server 8000
 
 ### 修改样式后线上没变化
 
-浏览器可能缓存了旧 CSS。更新 `index.html` 中 CSS 链接后的版本号：
+先确认 GitHub Pages 已部署完成，然后清除浏览器缓存。
+
+在 Windows 上，可以在网站页面按：
+
+```text
+Ctrl + F5
+```
+
+这会强制重新加载页面资源。如果仍然没有变化，在 Chrome 或 Edge 中执行：
+
+1. 按 `F12` 打开开发者工具。
+2. 长按或右键浏览器的刷新按钮。
+3. 选择“清空缓存并硬性重新加载”。
+
+开发时也可以打开开发者工具的 `Network` 面板，勾选 `Disable cache`。该选项只在开发者工具保持打开时生效。
+
+如果修改的是 CSS 或 JavaScript，建议同时更新 `index.html` 或 `notes.html` 中资源链接后的版本号：
 
 ```html
 css/style.css?v=20260620-3
+js/app.js?v=20260621-4
+```
+
+如果修改的是 Markdown 文章，而页面仍显示旧内容，需要更新 `js/app.js` 中 Markdown 请求地址后的版本号，或者将请求改为不使用缓存：
+
+```javascript
+const response = await fetch(post.file, { cache: "no-store" });
 ```
 
 ### 中文文件名文章打不开
