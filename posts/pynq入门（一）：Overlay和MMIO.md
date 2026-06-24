@@ -41,9 +41,9 @@ size = ol.ip_dict["axi_bram_ctrl_0"]["addr_range"]
 ```
 
 可以查询到Ps与Pl连接总线的起始地址和地址范围。
->> 作为字典，通过ip_dict.keys()就可以看到有几个key，从未知道有几个ip核。字典支持 **ip_dict["axi_bram_ctrl_0"]** 这样的访问，[]里必须是字符串。
->>
->>ip_dict 主要显示的是 PYNQ 能识别、能管理的 IP，尤其是带 AXI 地址映射的 IP。
+> 作为字典，通过ip_dict.keys()就可以看到有几个key，从未知道有几个ip核。字典支持 **ip_dict["axi_bram_ctrl_0"]** 这样的访问，[]里必须是字符串。
+>
+>ip_dict 主要显示的是 PYNQ 能识别、能管理的 IP，尤其是带 AXI 地址映射的 IP。
 
 ### MMIO
 
