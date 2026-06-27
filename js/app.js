@@ -223,7 +223,10 @@ function parseMarkdown(source) {
             continue;
         }
 
-        const paragraph = [trimmed];
+        const paragraph = [{
+            text: trimmed,
+            hardBreak: / {2,}$/.test(line)
+        }];
         while (
             i + 1 < lines.length &&
             lines[i + 1].trim() &&
@@ -237,9 +240,20 @@ function parseMarkdown(source) {
             !(lines[i + 1].includes("|") && lines[i + 2] && isTableDivider(lines[i + 2]))
         ) {
             i += 1;
-            paragraph.push(lines[i].trim());
+            paragraph.push({
+                text: lines[i].trim(),
+                hardBreak: / {2,}$/.test(lines[i])
+            });
         }
-        html.push(`<p>${renderInline(paragraph.join(" "))}</p>`);
+        const paragraphHtml = paragraph
+            .map((part, index) => {
+                const separator = index < paragraph.length - 1
+                    ? (part.hardBreak ? "<br>" : " ")
+                    : "";
+                return renderInline(part.text) + separator;
+            })
+            .join("");
+        html.push(`<p>${paragraphHtml}</p>`);
     }
 
     return html.join("");
