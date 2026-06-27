@@ -21,6 +21,20 @@ const posts = [
         summary: "计算机系统结构基础知识"
     },
     {
+        title: "系统结构笔记（二）：流水线技术",
+        date: "2026-06-27",
+        file: "posts/系统结构笔记（二）：流水线技术.md",
+        category: "笔记",
+        summary: "流水线技术"
+    },
+    {
+        title: "系统结构笔记（三）：Cache",
+        date: "2026-06-27",
+        file: "posts/系统结构笔记（三）：Cache/系统结构笔记（三）：Cache.md",
+        category: "笔记",
+        summary: "Cache"
+    },
+    {
         title: "pynq入门笔记（一）",
         date: "2026-06-24",
         file: "posts/pynq入门（一）：Overlay和MMIO.md",
