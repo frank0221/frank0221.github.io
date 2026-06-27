@@ -16,7 +16,7 @@ Cache主要由两个部分组成，Tag和Data。
 4. Cache Block(data block): Cache中的数据部分
 5. Cache set：能被同一个地址找到的多个Cache line被称为Cache set 
 
-[!cache示意图](posts\系统结构笔记（三）：Cache\组相连Cache结构png.png)
+![cache示意图](posts\系统结构笔记（三）：Cache\组相连Cache结构png.png)
 
 影响Cache miss的3C定理：
 
@@ -28,7 +28,7 @@ Cache主要由两个部分组成，Tag和Data。
 
 ### 直接映射
 
-[!直接映射](posts\系统结构笔记（三）：Cache\直接映射png.png)
+![直接映射](posts\系统结构笔记（三）：Cache\直接映射png.png)
 &emsp;&emsp;使用index来从Cache中找到一个对应的Cache line，但是所用index相同的地址都会寻址到这个Cache line，就会产生冲突。（直接映射一大缺点，如果两个index相同的存储器地址交互访问Cache就会一直导致Cache miss）  
 &emsp;&emsp;只有当地址中的tag和Cache中的tag相同时，才表明Cache line中是想要的。  
 &emsp;&emsp;在Cache line中还有一个有效位，用来标记Cache line是否有效，只有之前被访问，有效位才会置1。  
@@ -36,18 +36,18 @@ Cache主要由两个部分组成，Tag和Data。
 
 ### 组相联
 
-[!组相联](posts\系统结构笔记（三）：Cache\组相连Cache结构png.png)
+![组相联](posts\系统结构笔记（三）：Cache\组相连Cache结构png.png)
 &emsp;&emsp;依然通过index对Cache进行寻址，但是可以得到多个Cache line（一个Cache set）。需要比较tag来确定是不是需要。
 &emsp;&emsp;需要从多个Cache line中选择一个匹配结果，所以比直接映射的延迟更大，必要时可以进行流水线。
 
 1. 并行访问结构：
-[!并行访问](posts\系统结构笔记（三）：Cache\并行访问.png)
+![并行访问](posts\系统结构笔记（三）：Cache\并行访问.png)
 Cache访问一般都是处理器中的关键路径，如果一个周期完成访问，会占据很大延迟。所以使用流水线。对于I-Cache，流水线不会有太大影响，，依旧可以实现每周期读取指令。而对于D-Cache来说，会大大增加load指令延迟。
 
-[!并行访问流水线](posts\系统结构笔记（三）：Cache\并行流水线.png)
+![并行访问流水线](posts\系统结构笔记（三）：Cache\并行流水线.png)
 
 2. 串行访问结构：
-[!串行流水线](posts\系统结构笔记（三）：Cache\串行流水线.png)
+![串行流水线](posts\系统结构笔记（三）：Cache\串行流水线.png)
 读取速度更快，但是增加了一个访问周期。
 
 比较：串行流水线相比于并行流水线，少了多路选择器，降低了访问tag/data ram延迟。
@@ -69,10 +69,10 @@ Cache访问一般都是处理器中的关键路径，如果一个周期完成访
 - write allocate：写缺失时，先从下级存储其把这个发生缺失的地址对应的数据块取出来，将要写入D-Cache中的数据合并到数据块中，然后被修改的数据块写到D-Cache中。
 
 写通与non-write allocate一起使用：
-[!写通](posts\系统结构笔记（三）：Cache\写通与non-write_allocate.png)
+![写通](posts\系统结构笔记（三）：Cache\写通与non-write_allocate.png)
 
 写回与write allocate一起使用：
-[!写回](posts\系统结构笔记（三）：Cache\写回与write_allocate.png)
+![写回](posts\系统结构笔记（三）：Cache\写回与write_allocate.png)
 
 ## Cache的替换策略
 

@@ -810,3 +810,10 @@ input {
         padding-right: 18px;
     }
 }
+
+.markdown-body img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 1rem auto;
+}

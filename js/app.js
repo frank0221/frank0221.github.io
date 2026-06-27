@@ -22,7 +22,7 @@ const posts = [
     },
     {
         title: "系统结构笔记（二）：流水线技术",
-        date: "2026-06-27",
+        date: "2026-06-24",
         file: "posts/系统结构笔记（二）：流水线技术.md",
         category: "笔记",
         summary: "流水线技术"
@@ -86,10 +86,17 @@ function escapeAttr(value) {
 
 function renderInline(text) {
     let html = escapeHtml(text);
+    // Preserve the indentation entity used in notes.
+    html = html.replace(/&amp;emsp;/g, "\u2003");
     html = html.replace(/`([^`]+)`/g, "<code>$1</code>");
     html = html.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
     html = html.replace(/\*([^*]+)\*/g, "<em>$1</em>");
     html = html.replace(/\[\^([^\]]+)\]/g, '<sup>[$1]</sup>');
+    // Parse images before links because image syntax contains link syntax.
+    html = html.replace(
+        /!\[([^\]]*)\]\(([^)]+)\)/g,
+        (_, alt, src) => `<img src="${src.replace(/\\/g, "/")}" alt="${alt}" loading="lazy">`
+    );
     html = html.replace(
         /\[([^\]]+)\]\(([^)]+)\)/g,
         '<a href="$2" target="_blank" rel="noreferrer">$1</a>'
