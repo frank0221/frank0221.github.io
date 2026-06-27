@@ -32,13 +32,13 @@ Cache主要由两个部分组成，Tag和Data。
 &emsp;&emsp;使用index来从Cache中找到一个对应的Cache line，但是所用index相同的地址都会寻址到这个Cache line，就会产生冲突。（直接映射一大缺点，如果两个index相同的存储器地址交互访问Cache就会一直导致Cache miss）  
 &emsp;&emsp;只有当地址中的tag和Cache中的tag相同时，才表明Cache line中是想要的。  
 &emsp;&emsp;在Cache line中还有一个有效位，用来标记Cache line是否有效，只有之前被访问，有效位才会置1。  
-&emsp;&emsp;不需要替换算法，执行效率最低。
+&emsp;&emsp;不需要替换算法，执行效率最低。  
 
 ### 组相联
 
 ![组相联](posts\系统结构笔记（三）：Cache\组相连Cache结构png.png)
-&emsp;&emsp;依然通过index对Cache进行寻址，但是可以得到多个Cache line（一个Cache set）。需要比较tag来确定是不是需要。
-&emsp;&emsp;需要从多个Cache line中选择一个匹配结果，所以比直接映射的延迟更大，必要时可以进行流水线。
+&emsp;&emsp;依然通过index对Cache进行寻址，但是可以得到多个Cache line（一个Cache set）。需要比较tag来确定是不是需要。  
+&emsp;&emsp;需要从多个Cache line中选择一个匹配结果，所以比直接映射的延迟更大，必要时可以进行流水线。  
 
 1. 并行访问结构：
 ![并行访问](posts\系统结构笔记（三）：Cache\并行访问.png)
@@ -57,9 +57,9 @@ Cache访问一般都是处理器中的关键路径，如果一个周期完成访
 
 ### 全相连
 
-&emsp;&emsp;数据可以放在任意一个Cache line中，地址也不再有index部分，而是直接在整个Cache中进行tag比较，找到匹配结果。
-&emsp;&emsp;使用这种内容寻址的存储器（CAM）来存储tag,数据存储在普通ram中。
-&emsp;&emsp;全相连有最大自由度，所以缺失率最低，但是有大量内容比较因此延迟也是最大的。TLB中使用。
+&emsp;&emsp;数据可以放在任意一个Cache line中，地址也不再有index部分，而是直接在整个Cache中进行tag比较，找到匹配结果。  
+&emsp;&emsp;使用这种内容寻址的存储器（CAM）来存储tag,数据存储在普通ram中。  
+&emsp;&emsp;全相连有最大自由度，所以缺失率最低，但是有大量内容比较因此延迟也是最大的。TLB中使用。  
 
 ## Cache的写入
 
