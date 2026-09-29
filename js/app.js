@@ -47,13 +47,6 @@ const posts = [
         file: "posts/画图笔记.md",
         category: "笔记",
         summary: "Matplotlib 常用图表与科研绘图技巧。"
-    },
-    {
-        title: "关于这个站点",
-        date: "2026-06-20",
-        file: "posts/about.md",
-        category: "项目",
-        summary: "这个 GitHub Pages 站点的设计与实现说明。"
     }
 ];
 
