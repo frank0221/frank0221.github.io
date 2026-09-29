@@ -17,21 +17,21 @@ const posts = [
         title: "系统结构笔记（一）：系统结构基础概念",
         date: "2026-06-21",
         file: "posts/系统结构笔记（一）：系统结构基本概念.md",
-        category: "笔记",
+        category: "体系结构",
         summary: "计算机系统结构基础知识"
     },
     {
         title: "系统结构笔记（二）：流水线技术",
         date: "2026-06-24",
         file: "posts/系统结构笔记（二）：流水线技术.md",
-        category: "笔记",
+        category: "体系结构",
         summary: "流水线技术"
     },
     {
         title: "系统结构笔记（三）：Cache",
         date: "2026-06-27",
         file: "posts/系统结构笔记（三）：Cache/系统结构笔记（三）：Cache.md",
-        category: "笔记",
+        category: "体系结构",
         summary: "Cache"
     },
     {
