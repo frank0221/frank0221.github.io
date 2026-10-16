@@ -51,7 +51,7 @@ const posts = [
     {
         title: "系统结构笔记（五）：虚拟存储器",
         date: "2026-10-16",
-        file: "posts\系统结构笔记（五）：虚拟存储器\系统结构笔记（五）：虚拟存储器.md",
+        file: "posts/系统结构笔记（五）：虚拟存储器/系统结构笔记（五）：虚拟存储器.md",
         category: "体系结构",
         summary: "TLB。"
     }
@@ -340,16 +340,21 @@ async function loadPost(post) {
     elements.articleContent.innerHTML = '<p class="loading-state">正在加载文章...</p>';
 
     try {
-        const response = await fetch(post.file, { cache: "no-store" });
+        const articleUrl = new URL(post.file, document.baseURI);
+        const response = await fetch(articleUrl.href, { cache: "no-store" });
         if (!response.ok) {
             throw new Error(`HTTP ${response.status}`);
         }
         const text = await response.text();
         elements.articleContent.innerHTML = parseMarkdown(text);
+        elements.articleContent.querySelectorAll("img[src]").forEach((img) => {
+            img.src = new URL(img.getAttribute("src"), articleUrl).href;
+        });
     } catch (error) {
         elements.articleContent.innerHTML = `
             <h1>文章加载失败</h1>
-            <p>请确认当前页面通过本地 HTTP 服务或 GitHub Pages 访问，而不是直接双击打开 HTML 文件。</p>
+            <p>无法读取文章，请检查文件路径是否正确、文章是否已部署，或稍后刷新重试。</p>
+            <p>文章路径：<code>${escapeHtml(post.file)}</code></p>
         `;
         console.error(error);
     }
