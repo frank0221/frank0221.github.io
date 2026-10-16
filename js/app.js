@@ -48,6 +48,13 @@ const posts = [
         category: "笔记",
         summary: "Matplotlib 常用图表与科研绘图技巧。"
     }
+    {
+        title: "系统结构笔记（五）：虚拟存储器",
+        date: "2026-10-16",
+        file: "posts\系统结构笔记（五）：虚拟存储器\系统结构笔记（五）：虚拟存储器.md",
+        category: "体系结构",
+        summary: "TLB。"
+    }
 ];
 
 const state = {
